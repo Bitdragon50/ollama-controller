@@ -65,8 +65,8 @@ impl Ollama {
         }
     }
     #[warn(dead_code)]
-    fn new(instance: String, model: String) -> Ollama {
-        Ollama { host: format!("{}/api/",instance),
+    pub fn new(instance: String, model: String) -> Ollama {
+        Ollama { host: format!("{}/api",instance),
                  model
                 }
     }
@@ -191,11 +191,11 @@ struct ChatMessage {
     content: String
 }
 
-enum OllamaResponse {
-    EmbeddingsResponse,
-    ChatResponse,
-    CompletionResponse
-}
+// enum OllamaResponse {
+//     EmbeddingsResponse,
+//     ChatResponse,
+//     CompletionResponse
+// }
 
 
     // fn list_model(){}
