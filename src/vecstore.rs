@@ -13,10 +13,11 @@ pub async fn save_embedding<s: Into<String > + Clone>(embeddings: Vec<Vec<f32>>,
         client.create_collection(collection_builder).await?;
     } else {
         client.delete_collection(store_name.clone()).await?;
-        let collection_builder = CreateCollectionBuilder::new(store_name.clone()).vectors_config(VectorParamsBuilder::new(dimensions, Distance::Cosine));
+        let quantize = ScalarQuantizationBuilder::default().build();
+        let collection_builder = CreateCollectionBuilder::new(store_name.clone()).vectors_config(VectorParamsBuilder::new(dimensions, Distance::Cosine))
+        .quantization_config(quantize);
         client.create_collection(collection_builder).await?;
     }
-
 
     let points = embeddings.into_iter().enumerate().map(|(index, embedding)| {
         let message = text[index].as_str();
@@ -34,7 +35,7 @@ pub async fn save_embedding<s: Into<String > + Clone>(embeddings: Vec<Vec<f32>>,
     Ok(())
 }
 
-pub async fn find_sim<s: Into<String > + Clone>(vector: Vec<f32>, store_name: s) -> Result<(), QdrantError> {
+pub async fn find_sim<S: Into<String > + Clone>(vector: Vec<f32>, store_name: S) -> Result<(), QdrantError> {
     let client = Qdrant::from_url("http://localhost:6334").build()?;
 
     let search_result = client

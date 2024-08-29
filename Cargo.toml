@@ -4,6 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+base64 = { version = "0.21.0-rc.1" }
+chrono = "0.4.38"
+confluence = "0.4.1"
+headless_chrome = "1.0.13"
+image = "0.25.2"
 #pgvector = { version = "0.4.0", features = ["postgres", "sqlx"] }
 #postgres = "0.19.8"
 qdrant-client = "1.11.1"
